@@ -69,6 +69,16 @@ function fetchConfig(token: string): RequestInit {
   };
 }
 
+// Keep a last known push token from native layer if provided
+let lastPushToken: string | undefined;
+
+self.addEventListener('message', (event: ExtendableMessageEvent) => {
+  const data = event.data || {};
+  if (data?.type === 'pushToken' && data?.token) {
+    lastPushToken = data.token;
+  }
+});
+
 self.addEventListener('fetch', (event: FetchEvent) => {
   const { url, method } = event.request;
 

@@ -1,0 +1,24 @@
+{
+  "name": "cinny-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lightweight Capacitor wrapper for the Cinny web app (Android)",
+  "scripts": {
+    "build:web": "cd .. && npm run build",
+    "prepare:web": "rm -rf www && mkdir -p www && cp -r ../dist/* www/ || true",
+    "dev": "npx cap open android",
+    "android:add": "npx cap add android",
+    "android:open": "npx cap open android",
+    "sync": "npx cap sync android",
+    "copy-web": "npm run prepare:web && npx cap copy android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/keyboard": "^5.0.0",
+    "@capacitor/push-notifications": "^5.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^5.7.8"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "appId": "app.cinny.mobile",
+  "appName": "Cinny",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
