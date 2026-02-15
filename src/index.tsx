@@ -22,14 +22,11 @@ document.body.classList.add(configClass, varsClass);
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
-  const swUrl =
-    import.meta.env.MODE === 'production'
-      ? `${trimTrailingSlash(import.meta.env.BASE_URL)}/sw.js`
-      : `/dev-sw.js?dev-sw`;
-
-  navigator.serviceWorker.register(swUrl).then(() => {
+  const swUrl = '/sw.js';
+  navigator.serviceWorker.register(swUrl, { scope: '/' }).then(() => {
     const session = getFallbackSession();
     pushSessionToSW(session?.baseUrl, session?.accessToken);
+  });
 
   // Pre-flight fetch check: attempt to fetch the SW script and log status + headers
   // This helps diagnose cases where the WebView cannot fetch the script (404, CORS, MIME, local server not running, etc.)
