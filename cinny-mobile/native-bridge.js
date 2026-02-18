@@ -14,7 +14,7 @@
   async function init() {
     if (!isCapacitor) return;
 
-    const { PushNotifications, LocalNotifications, Keyboard } = window.Capacitor.Plugins || window.Capacitor;
+    const { PushNotifications, Keyboard } = window.Capacitor.Plugins || window.Capacitor;
 
     try {
       // 1. Setup Keyboard logic
@@ -26,14 +26,6 @@
         } catch (e) {
           console.warn('[NativeBridge] Failed to set keyboard resize mode', e);
         }
-      }
-
-      // Local Notifications
-      async function requestPermissions() {
-          const perm = await LocalNotifications.requestPermissions();
-          if (perm.display !== 'granted') {
-              console.warn("User denied notification permissions!");
-          }
       }
 
       // 2. Push Notification Setup
@@ -54,26 +46,7 @@
       });
 
       PushNotifications.addListener('pushNotificationReceived', async (notification) => {
-        console.log('[NativeBridge] PNAAAAA received in foreground:', notification);
-        console.log("this is updated");
-
-        // Extract Matrix data (Sygnal usually sends room_id, sender, etc. in 'data')
-        const { sender_display_name, content_body } = notification.data || {};
-
-        await LocalNotifications.schedule({
-          notifications: [
-            {
-              title: "New Message from " + (sender_display_name || "Unknown"),
-              body: content_body || "You received a message on Cinny",
-              id: Math.floor(Math.random() * 1000000), 
-              schedule: { at: new Date(Date.now() + 100) },
-              sound: null,
-              attachments: null,
-              actionTypeId: "",
-              extra: notification.data
-            }
-          ]
-        });
+        console.log('[NativeBridge] PN received in foreground:', notification);
       });
 
     } catch (e) {
